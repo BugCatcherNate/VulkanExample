@@ -1,48 +1,11 @@
-
-
-
-<!DOCTYPE html>
-<html lang="en"> 
-<head>
-    <meta charset="utf-8"/>
-	<title>Code Viewer. Source code: includes/learnopengl/camera.h</title>
-	<link rel="stylesheet" type="text/css" href="layout.css">
-    <link rel="stylesheet" type="text/css" href="js/styles/obsidian.css">
-    <script src="js/jquery-1.11.0.min.js"></script>
-    <script src="js/hoverintent.js"></script>
-    <script src="js/highlight.pack.js"></script>
-    <script src="js/functions.js"></script>
-    <script type="text/javascript" src="js/mathjax/MathJax.js?config=TeX-AMS_HTML"> // Has to be loaded last due to content bug </script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <script>
-        window.onload = function() {
-            $("#codez").mousedown(function() { switchNumbering(true); });
-            $("#codez").mouseup(function() { switchNumbering(false); });
-            
-            function switchNumbering(hide)
-            {     
-                if(hide)
-                    $('span.number').hide();
-                else
-                    $('span.number').show();
-            }
-            
-            // Create all function callbacks
-            SetFunctionTagCallbacks();
-        };
-        
-    </script>
-</head>
-<body style="margin:0; padding:0; background-image: none; background-color: #282B2E;">
-
-<pre style="width: 100%; height: 100%;"><code id="codez" style="margin:0; padding:25; border:0; border-radius:0;">#ifndef CAMERA_H
+#ifndef CAMERA_H
 #define CAMERA_H
 
-#include &lt;glad/glad.h&gt;
-#include &lt;glm/glm.hpp&gt;
-#include &lt;glm/gtc/matrix_transform.hpp&gt;
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
-#include &lt;vector&gt;
+#include <vector>
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
@@ -53,9 +16,9 @@ enum Camera_Movement {
 };
 
 // Default camera values
-const float YAW         = -90.0f;
+const float YAW         = -10.0f;
 const float PITCH       =  0.0f;
-const float SPEED       =  2.5f;
+const float SPEED       =  0.005f;
 const float SENSITIVITY =  0.1f;
 const float ZOOM        =  45.0f;
 
@@ -100,7 +63,7 @@ public:
     // Returns the view matrix calculated using Euler Angles and the LookAt Matrix
     glm::mat4 GetViewMatrix()
     {
-        return<function id='62'> glm::lookAt(</function>Position, Position + Front, Up);
+        return glm::lookAt(Position, Position + Front, Up);
     }
 
     // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
@@ -129,9 +92,9 @@ public:
         // Make sure that when pitch is out of bounds, screen doesn't get flipped
         if (constrainPitch)
         {
-            if (Pitch &gt; 89.0f)
+            if (Pitch > 89.0f)
                 Pitch = 89.0f;
-            if (Pitch &lt; -89.0f)
+            if (Pitch < -89.0f)
                 Pitch = -89.0f;
         }
 
@@ -142,11 +105,11 @@ public:
     // Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
     void ProcessMouseScroll(float yoffset)
     {
-        if (Zoom &gt;= 1.0f &amp;&amp; Zoom &lt;= 45.0f)
+        if (Zoom >= 1.0f && Zoom <= 45.0f)
             Zoom -= yoffset;
-        if (Zoom &lt;= 1.0f)
+        if (Zoom <= 1.0f)
             Zoom = 1.0f;
-        if (Zoom &gt;= 45.0f)
+        if (Zoom >= 45.0f)
             Zoom = 45.0f;
     }
 
@@ -156,20 +119,13 @@ private:
     {
         // Calculate the new Front vector
         glm::vec3 front;
-        front.x = cos<function id='63'>(glm::radians(</function>Yaw)) * cos<function id='63'>(glm::radians(</function>Pitch));
-        front.y = sin<function id='63'>(glm::radians(</function>Pitch));
-        front.z = sin<function id='63'>(glm::radians(</function>Yaw)) * cos<function id='63'>(glm::radians(</function>Pitch));
+        front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+        front.y = sin(glm::radians(Pitch));
+        front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
         Front = glm::normalize(front);
         // Also re-calculate the Right and Up vector
-        Right = glm::normalize<function id='61'>(glm::cross(</function>Front, WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-        Up    = glm::normalize<function id='61'>(glm::cross(</function>Right, Front));
+        Right = glm::normalize(glm::cross(Front, WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+        Up    = glm::normalize(glm::cross(Right, Front));
     }
 };
-#endif</pre></code>
-
-<div id="hover">
-        HI
-</div>
-
-</body>
-</html>
+#endif
