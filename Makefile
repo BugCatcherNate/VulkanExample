@@ -1,10 +1,10 @@
-VULKAN_SDK_PATH = /home/nathan/Downloads/1.1.130.0/x86_64
-TINYOBJ_INCLUDE_PATH = /home/nathan/VulkanTest/libraries
-STB_INCLUDE_PATH = /home/nathan/VulkanTest/libraries
-CAMERA_INCLUDE_PATH = /home/nathan/VulkanTest/libraries
-GLAD = /home/nathan/VulkanTest
+DIR =${shell pwd}
 
-CFLAGS = -std=c++17 -O0 -I$(VULKAN_SDK_PATH)/include -g -I$(STB_INCLUDE_PATH) -I$(TINYOBJ_INCLUDE_PATH) -I$(CAMERA_INCLUDE_PATH) -I$(GLAD)
+VULKAN_SDK_PATH = $(HOME)/libs/1.1.130.0/x86_64
+LIBRARY_PATH=$(DIR)
+LIBRARY_PATH :=libraries
+
+CFLAGS = -std=c++17 -O0 -I$(VULKAN_SDK_PATH)/include -g -I$(LIBRARY_PATH)
 
 LDFLAGS = -L$(VULKAN_SDK_PATH)/lib `pkg-config --static --libs glfw3` -lvulkan
 
