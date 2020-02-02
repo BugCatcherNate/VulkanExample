@@ -1373,7 +1373,7 @@ static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         UniformBufferObject ubo = {};
 	ubo.model = glm::translate(glm::mat4(1.0f), glm::vec3(4.0f,  -1.0f,  0.0f));
         ubo.view = camera.GetViewMatrix();
-        ubo.proj = glm::perspective(glm::radians(camera.Zoom), swapChainExtent.width / (float) swapChainExtent.height, 0.1f, 10.0f);
+        ubo.proj = glm::perspective(glm::radians(camera.Zoom), swapChainExtent.width / (float) swapChainExtent.height, 0.1f, 100.0f);
         ubo.proj[1][1] *= -1;
 
         void* data;
