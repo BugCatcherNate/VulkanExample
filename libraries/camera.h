@@ -33,6 +33,7 @@ public:
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
+    glm::vec3 TempFront;
     // Euler Angles
     float Yaw;
     float Pitch;
@@ -70,10 +71,13 @@ public:
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {
         float velocity = MovementSpeed * deltaTime;
+	TempFront.x = Front.x;
+	TempFront.z = Front.z;
+	TempFront.y = 0.0f;
         if (direction == FORWARD)
-            Position += Front * velocity;
+            Position += TempFront * velocity;
         if (direction == BACKWARD)
-            Position -= Front * velocity;
+            Position -= TempFront * velocity;
         if (direction == LEFT)
             Position -= Right * velocity;
         if (direction == RIGHT)
@@ -119,8 +123,8 @@ private:
     {
         // Calculate the new Front vector
         glm::vec3 front;
-        front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-        front.y = sin(glm::radians(Pitch));
+       	front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+      	front.y = sin(glm::radians(Pitch));
         front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
         Front = glm::normalize(front);
         // Also re-calculate the Right and Up vector
